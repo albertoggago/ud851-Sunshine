@@ -114,8 +114,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                Context context = getApplicationContext();
-                String[] forecastPredictions = OpenWeatherJsonUtils.getSimpleWeatherStringsFromJson(context, s);
+                String[] forecastPredictions = OpenWeatherJsonUtils.getSimpleWeatherStringsFromJson(MainActivity.this, s);
                 for (String forecastPrediction : forecastPredictions) {
                     mWeatherTextView.append(forecastPrediction + "\n\n\n");
                 }
