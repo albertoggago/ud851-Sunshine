@@ -53,13 +53,14 @@ public final class OpenWeatherJsonUtils {
         final String OWM_TEMPERATURE = "temp";
 
         /* Max temperature for the day */
-        final String OWM_MAX = "max";
-        final String OWM_MIN = "min";
+        final String OWM_MAX = "temp_max";
+        final String OWM_MIN = "temp_min";
 
         final String OWM_WEATHER = "weather";
         final String OWM_DESCRIPTION = "main";
 
         final String OWM_MESSAGE_CODE = "cod";
+        final String OWM_DATE = "dt";
 
         /* String array to hold each day's weather String */
         String[] parsedWeatherData = null;
@@ -86,9 +87,6 @@ public final class OpenWeatherJsonUtils {
 
         parsedWeatherData = new String[weatherArray.length()];
 
-        long localDate = System.currentTimeMillis();
-        long utcDate = SunshineDateUtils.getUTCDateFromLocal(localDate);
-        long startDay = SunshineDateUtils.normalizeDate(utcDate);
 
         for (int i = 0; i < weatherArray.length(); i++) {
             String date;
@@ -107,7 +105,8 @@ public final class OpenWeatherJsonUtils {
              * We ignore all the datetime values embedded in the JSON and assume that
              * the values are returned in-order by day (which is not guaranteed to be correct).
              */
-            dateTimeMillis = startDay + SunshineDateUtils.DAY_IN_MILLIS * i;
+            //dateTimeMillis = startDay + SunshineDateUtils.DAY_IN_MILLIS * i;
+            dateTimeMillis = dayForecast.getLong(OWM_DATE);
             date = SunshineDateUtils.getFriendlyDateString(context, dateTimeMillis, false);
 
             /*
@@ -125,7 +124,7 @@ public final class OpenWeatherJsonUtils {
              * It confuses everybody. Temp could easily mean any number of things, including
              * temperature, temporary and is just a bad variable name.
              */
-            JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
+            JSONObject temperatureObject = dayForecast.getJSONObject(OWM_DESCRIPTION);
             high = temperatureObject.getDouble(OWM_MAX);
             low = temperatureObject.getDouble(OWM_MIN);
             highAndLow = SunshineWeatherUtils.formatHighLows(context, high, low);
