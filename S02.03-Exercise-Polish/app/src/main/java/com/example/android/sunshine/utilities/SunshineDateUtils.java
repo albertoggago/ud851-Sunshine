@@ -21,6 +21,7 @@ import android.text.format.DateUtils;
 import com.example.android.sunshine.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.TimeZone;
 
 /**
@@ -108,7 +109,7 @@ public final class SunshineDateUtils {
      */
     public static String getFriendlyDateString(Context context, long dateInMillis, boolean showFullDate) {
 
-        long localDate = getLocalDateFromUTC(dateInMillis);
+        long localDate = getLocalDateFromUTC(dateInMillis*1000);
         long dayNumber = getDayNumber(localDate);
         long currentDayNumber = getDayNumber(System.currentTimeMillis());
 
@@ -120,16 +121,6 @@ public final class SunshineDateUtils {
             String dayName = getDayName(context, localDate);
             String readableDate = getReadableDateString(context, localDate);
             if (dayNumber - currentDayNumber < 2) {
-                /*
-                 * Since there is no localized format that returns "Today" or "Tomorrow" in the API
-                 * levels we have to support, we take the name of the day (from SimpleDateFormat)
-                 * and use it to replace the date from DateUtils. This isn't guaranteed to work,
-                 * but our testing so far has been conclusively positive.
-                 *
-                 * For information on a simpler API to use (on API > 18), please check out the
-                 * documentation on DateFormat#getBestDateTimePattern(Locale, String)
-                 * https://developer.android.com/reference/android/text/format/DateFormat.html#getBestDateTimePattern
-                 */
                 String localizedDayName = new SimpleDateFormat("EEEE").format(localDate);
                 return readableDate.replace(localizedDayName, dayName);
             } else {
@@ -159,8 +150,11 @@ public final class SunshineDateUtils {
      */
     private static String getReadableDateString(Context context, long timeInMillis) {
         int flags = DateUtils.FORMAT_SHOW_DATE
+                | DateUtils.FORMAT_SHOW_TIME
                 | DateUtils.FORMAT_NO_YEAR
-                | DateUtils.FORMAT_SHOW_WEEKDAY;
+                | DateUtils.FORMAT_SHOW_WEEKDAY
+                | DateUtils.FORMAT_SHOW_TIME
+                | DateUtils.FORMAT_24HOUR;
 
         return DateUtils.formatDateTime(context, timeInMillis, flags);
     }
@@ -181,17 +175,19 @@ public final class SunshineDateUtils {
          */
         long dayNumber = getDayNumber(dateInMillis);
         long currentDayNumber = getDayNumber(System.currentTimeMillis());
+        SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm");
+        String hourString = " "+hourFormat.format(dateInMillis);
         if (dayNumber == currentDayNumber) {
             return context.getString(R.string.today);
         } else if (dayNumber == currentDayNumber + 1) {
-            return context.getString(R.string.tomorrow);
+            return context.getString(R.string.tomorrow)+hourString;
         } else {
             /*
              * Otherwise, if the day is not today, the format is just the day of the week
              * (e.g "Wednesday")
              */
             SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE");
-            return dayFormat.format(dateInMillis);
+            return dayFormat.format(dateInMillis)+hourString;
         }
     }
 }
