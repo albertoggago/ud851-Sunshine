@@ -61,6 +61,7 @@ public final class OpenWeatherJsonUtils {
 
         final String OWM_MESSAGE_CODE = "cod";
 
+        final String DT = "dt";
         /* String array to hold each day's weather String */
         String[] parsedWeatherData = null;
 
@@ -107,7 +108,8 @@ public final class OpenWeatherJsonUtils {
              * We ignore all the datetime values embedded in the JSON and assume that
              * the values are returned in-order by day (which is not guaranteed to be correct).
              */
-            dateTimeMillis = startDay + SunshineDateUtils.DAY_IN_MILLIS * i;
+            //dateTimeMillis = startDay + SunshineDateUtils.DAY_IN_MILLIS * i;
+            dateTimeMillis = dayForecast.getLong(DT);
             date = SunshineDateUtils.getFriendlyDateString(context, dateTimeMillis, false);
 
             /*

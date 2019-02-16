@@ -150,6 +150,7 @@ public final class SunshineDateUtils {
      */
     private static String getReadableDateString(Context context, long timeInMillis) {
         int flags = DateUtils.FORMAT_SHOW_DATE
+                | DateUtils.FORMAT_SHOW_TIME
                 | DateUtils.FORMAT_NO_YEAR
                 | DateUtils.FORMAT_SHOW_WEEKDAY
                 | DateUtils.FORMAT_SHOW_TIME
