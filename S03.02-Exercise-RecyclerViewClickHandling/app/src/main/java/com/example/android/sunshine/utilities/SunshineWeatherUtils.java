@@ -77,11 +77,13 @@ public final class SunshineWeatherUtils {
      * @return String in the form: "HIGH°C / LOW°C"
      */
     public static String formatHighLows(Context context, double high, double low) {
-        long roundedHigh = Math.round(high);
-        long roundedLow = Math.round(low);
+        //long roundedHigh = Math.round(high);
+        //long roundedLow = Math.round(low);
 
-        String formattedHigh = formatTemperature(context, roundedHigh);
-        String formattedLow = formatTemperature(context, roundedLow);
+        //String formattedHigh = formatTemperature(context, roundedHigh);
+        //String formattedLow = formatTemperature(context, roundedLow);
+        String formattedHigh = formatTemperature(context, high);
+        String formattedLow = formatTemperature(context, low);
 
         String highLowStr = formattedHigh + " / " + formattedLow;
         return highLowStr;
