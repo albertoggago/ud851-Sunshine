@@ -16,7 +16,6 @@
 package com.example.android.sunshine.utilities;
 
 import android.net.Uri;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,12 +32,16 @@ public final class NetworkUtils {
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
     private static final String DYNAMIC_WEATHER_URL =
-            "https://andfun-weather.udacity.com/weather";
+            //"https://andfun-weather.udacity.com/weather"
+            "https://api.openweathermap.org/data/2.5/";
 
     private static final String STATIC_WEATHER_URL =
             "https://andfun-weather.udacity.com/staticweather";
 
-    private static final String FORECAST_BASE_URL = STATIC_WEATHER_URL;
+    private static final String FORECAST_VALUE = "forecast";
+    private static final String WEATHER_VALUE = "weather";
+    public static final String FORECAST_BASE_URL = DYNAMIC_WEATHER_URL+FORECAST_VALUE;
+    public static final String WEATHER_BASE_URL = DYNAMIC_WEATHER_URL+WEATHER_VALUE;
 
     /*
      * NOTE: These values only effect responses from OpenWeatherMap, NOT from the fake weather
@@ -60,6 +63,10 @@ public final class NetworkUtils {
     final static String FORMAT_PARAM = "mode";
     final static String UNITS_PARAM = "units";
     final static String DAYS_PARAM = "cnt";
+    final static String APPID = "APPID";
+    final static String APIKEY = "41b36e2276987ae7f72271280aa45dce";
+    final static String UNITS = "units";
+    final static String DEFAULT_UNITS = "metric";
 
     /**
      * Builds the URL used to talk to the weather server using a location. This location is based
@@ -71,9 +78,8 @@ public final class NetworkUtils {
     public static URL buildUrl(String locationQuery) {
         Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                 .appendQueryParameter(QUERY_PARAM, locationQuery)
-                .appendQueryParameter(FORMAT_PARAM, format)
-                .appendQueryParameter(UNITS_PARAM, units)
-                .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
+                .appendQueryParameter(APPID, APIKEY)
+                .appendQueryParameter(UNITS, DEFAULT_UNITS)
                 .build();
 
         URL url = null;
@@ -83,10 +89,9 @@ public final class NetworkUtils {
             e.printStackTrace();
         }
 
-        Log.v(TAG, "Built URI " + url);
-
         return url;
     }
+
 
     /**
      * Builds the URL used to talk to the weather server using latitude and longitude of a
