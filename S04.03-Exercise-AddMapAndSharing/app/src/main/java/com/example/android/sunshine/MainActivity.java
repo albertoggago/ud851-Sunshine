@@ -215,14 +215,33 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_refresh) {
-            mForecastAdapter.setWeatherData(null);
-            loadWeatherData();
-            return true;
+        switch (id ) {
+            case R.id.action_refresh:
+                mForecastAdapter.setWeatherData(null);
+                loadWeatherData();
+                return true;
+            case  R.id.action_open_map:
+                loadMap();
+                return true;
         }
 
-        // TODO (2) Launch the map when the map menu item is clicked
+        // DONE (2) Launch the map when the map menu item is clicked
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void loadMap() {
+        String query = "geo:0,0?q=";
+        String place = SunshinePreferences.DEFAULT_MAP_LOCATION;
+        Uri uriMap = Uri.parse(query+place);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW);
+        mapIntent.setData(uriMap);
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        } else {
+            Log.e(TAG, "Couldn't call " + uriMap.toString()
+                    + ", no receiving apps installed!");
+        }
+
     }
 }
