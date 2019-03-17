@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,9 +43,9 @@ import com.example.android.sunshine.utilities.OpenWeatherJsonUtils;
 
 import java.net.URL;
 
-// TODO (1) Implement the proper LoaderCallbacks interface and the methods of that interface
+// DONE (1) Implement the proper LoaderCallbacks interface and the methods of that interface
 public class MainActivity extends AppCompatActivity
-        implements ForecastAdapterOnClickHandler, LoaderManager
+        implements ForecastAdapterOnClickHandler, LoaderManager.LoaderCallbacks<String>
  {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -120,10 +121,6 @@ public class MainActivity extends AppCompatActivity
         new FetchWeatherTask().execute(location);
     }
 
-    // TODO (2) Within onCreateLoader, return a new AsyncTaskLoader that looks a lot like the existing FetchWeatherTask.
-    // TODO (3) Cache the weather data in a member variable and deliver it in onStartLoading.
-
-    // TODO (4) When the load is finished, show either the data or an error message if there is no data
 
     /**
      * This method is overridden by our MainActivity class in order to handle RecyclerView item
@@ -193,6 +190,33 @@ public class MainActivity extends AppCompatActivity
 
      @Override
      public void markForRedelivery() {
+
+     }
+
+     // DONE (2) Within onCreateLoader, return a new AsyncTaskLoader that looks a lot like the existing FetchWeatherTask.
+     // TODO (3) Cache the weather data in a member variable and deliver it in onStartLoading.
+
+     // TODO (4) When the load is finished, show either the data or an error message if there is no data
+
+     @NonNull
+     @Override
+     public Loader<String> onCreateLoader(int i, @Nullable Bundle bundle) {
+         return new AsyncTaskLoader<String>() {
+             @Nullable
+             @Override
+             public String loadInBackground() {
+                 return null;
+             }
+         };
+     }
+
+     @Override
+     public void onLoadFinished(@NonNull Loader<String> loader, String s) {
+
+     }
+
+     @Override
+     public void onLoaderReset(@NonNull Loader<String> loader) {
 
      }
 
