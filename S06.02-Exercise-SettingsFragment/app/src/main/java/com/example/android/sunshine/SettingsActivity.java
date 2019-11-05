@@ -16,6 +16,8 @@
 package com.example.android.sunshine;
 
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -26,9 +28,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_settings);
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_settings);
+        ActionBar actionBar = this.getSupportActionBar();
+
+        // Set the action bar back button to look like an up button
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         // DONE (2) Create an xml resource directory
         // DONE (3) Add a PreferenceScreen with an EditTextPreference and ListPreference within the newly created xml resource directory
@@ -40,25 +48,27 @@ public class SettingsActivity extends AppCompatActivity {
 
         // DONE (8) Create a method called setPreferenceSummary that accepts a Preference and an Object and sets the summary of the preference
 
-        // TODO (5) Override onCreatePreferences and add the preference xml file using addPreferencesFromResource
+        // DONE (5) Override onCreatePreferences and add the preference xml file using addPreferencesFromResource
 
         // Do step 9 within onCreatePreference
-        // TODO (9) Set the preference summary on each preference that isn't a CheckBoxPreference
+        // DONE (9) Set the preference summary on each preference that isn't a CheckBoxPreference
 
-        // TODO (13) Unregister SettingsFragment (this) as a SharedPreferenceChangedListener in onStop
+        // DONE (13) Unregister SettingsFragment (this) as a SharedPreferenceChangedListener in onStop
 
-        // TODO (12) Register SettingsFragment (this) as a SharedPreferenceChangedListener in onStart
+        // DONE (12) Register SettingsFragment (this) as a SharedPreferenceChangedListener in onStart
 
-        // TODO (11) Override onSharedPreferenceChanged to update non CheckBoxPreferences when they are changed
+        // DONE (11) Override onSharedPreferenceChanged to update non CheckBoxPreferences when they are changed
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        // When the home button is pressed, take the user back to the VisualizerActivity
         if (id == android.R.id.home) {
-            onBackPressed();
+            NavUtils.navigateUpFromSameTask(this);
         }
-
         return super.onOptionsItemSelected(item);
     }
+
+
 }
