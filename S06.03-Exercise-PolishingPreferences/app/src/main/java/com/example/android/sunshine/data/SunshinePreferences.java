@@ -16,6 +16,10 @@
 package com.example.android.sunshine.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v7.preference.PreferenceManager;
+
+import com.example.android.sunshine.R;
 
 public class SunshinePreferences {
 
@@ -36,11 +40,11 @@ public class SunshinePreferences {
      * Before you implement methods to return your REAL preference for location,
      * we provide some default values to work with.
      */
-    private static final String DEFAULT_WEATHER_LOCATION = "94043,USA";
+    private static final String DEFAULT_WEATHER_LOCATION = "Dublin,Ireland";
     private static final double[] DEFAULT_WEATHER_COORDINATES = {37.4284, 122.0724};
 
-    private static final String DEFAULT_MAP_LOCATION =
-            "1600 Amphitheatre Parkway, Mountain View, CA 94043";
+    public static final String DEFAULT_MAP_LOCATION =
+            "Dublin, Ireland";
 
     /**
      * Helper method to handle setting location details in Preferences (City Name, Latitude,
@@ -87,22 +91,25 @@ public class SunshinePreferences {
      * "94043,USA" if SharedPreferences have not been implemented yet.
      */
     public static String getPreferredWeatherLocation(Context context) {
-        // TODO (1) Return the user's preferred location
-        /** This will be implemented in a future lesson **/
-        return getDefaultWeatherLocation();
+        // DONE (1) Return the user's preferred location
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        return sharedPreferences.getString( context.getResources().getString(R.string.pref_location_key),
+                                    getDefaultWeatherLocation());
     }
 
     /**
      * Returns true if the user has selected metric temperature display.
      *
      * @param context Context used to get the SharedPreferences
-     *
      * @return true If metric display should be used
      */
     public static boolean isMetric(Context context) {
-        // TODO (2) Return true if the user's preference for units is metric, false otherwise
-        /** This will be implemented in a future lesson **/
-        return true;
+        // DONE (2) Return true if the user's preference for units is metric, false otherwise
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString( context.getResources().getString(R.string.pref_units_key),
+                getDefaultWeatherLocation())
+                .equals(context.getResources().getString(R.string.pref_units_metric));
     }
 
     /**

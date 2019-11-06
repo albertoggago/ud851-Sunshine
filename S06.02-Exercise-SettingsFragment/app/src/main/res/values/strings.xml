@@ -50,7 +50,7 @@
     <string name="pref_location_key" translatable="false">location</string>
 
     <!-- Default postal code for location preference [CHAR LIMIT=NONE] -->
-    <string name="pref_location_default" translatable="false">Mountain View, CA 94043</string>
+    <string name="pref_location_default" translatable="false">Dublin, Ireland</string>
 
     <!-- Label for the temperature units preference [CHAR LIMIT=30] -->
     <string name="pref_units_label">Temperature Units</string>
@@ -93,12 +93,12 @@
 
     <!-- Temperature format in Celsius [CHAR LIMIT=5] -->
     <string name="format_temperature_celsius">
-        <xliff:g id="temp">%1.0f</xliff:g>\u00B0C
+        <xliff:g id="temp">%1.2f</xliff:g>\u00B0C
     </string>
 
     <!-- Temperature format in Fahrenheit [CHAR LIMIT=5] -->
     <string name="format_temperature_fahrenheit">
-        <xliff:g id="temp">%1.0f</xliff:g>\u00B0F
+        <xliff:g id="temp">%1.2f</xliff:g>\u00B0F
     </string>
 
     <!-- Wind in kph [CHAR LIMIT=25] -->
